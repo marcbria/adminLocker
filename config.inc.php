@@ -25,10 +25,9 @@
 ; If you prefer, you can also enable smarty {debug} in the OJS templates
 ; and check the variable $pageTitle of the page/form you want to lock.
 
-pageTitle = TRUE
-; pageTitle = FALSE
-
-
+; pageTitle = TRUE
+pageTitle = FALSE
+showLocked = TRUE
 
 ;;;;;;;;;;;;;;;;;;;;
 ; Allowed Users    ;

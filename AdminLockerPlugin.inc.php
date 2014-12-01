@@ -60,13 +60,18 @@ class AdminLockerPlugin extends GenericPlugin {
         $allowedUsers = $lockConfig['allowedUsers']['user'];
         $loggedInuser = $smarty->get_template_vars('loggedInUsername');
         $showPageTitle = $lockConfig['debug']['pageTitle'];
+        $showLocked = $lockConfig['debug']['showLocked'];
         $whereAmI = $smarty->get_template_vars('pageTitle');
+        $disabledPages = $lockConfig['disabledPages'];
+        $disabledPage = FALSE;
+
+        if ( array_key_exists($whereAmI, $disabledPages) ) {
+            $disabledPage = TRUE;
+        }
 
         if ( ! in_array($loggedInuser, $allowedUsers)) {
 
-            $disabledPages = $lockConfig['disabledPages'];
-
-            if ( array_key_exists($whereAmI, $disabledPages) ) {
+            if ( $disabledPage ) {
 
                 if (strpos ($output, '<div id="content">')) {
 
@@ -153,17 +158,21 @@ class AdminLockerPlugin extends GenericPlugin {
             }
         }
 
+        // Helper: Show pageTitle smarty variable if config.inc.php requests for it.
         if ($showPageTitle) {
-            // Helper: Show pageTitle smarty variable if config.inc.php requests for it.
-            $notification =  '<div id="content"><div class="adminlock message relative">';
-            $notification .= __('plugins.generic.adminlocker.debug.info') . ': <br />';
-            $notification .= $whereAmI . ' = "info"</div>';
-            $newOutput = str_replace('<div id="content">',$notification, $output);
-            return $newOutput;
+            $notification =  "<div id=\"content\">\n<div class=\"adminlock message relative\">\n";
+            $notification .= __('plugins.generic.adminlocker.debug.info') . ": <br />\n";
+            $notification .= $whereAmI . " = \"info\"</div>\n";
+            $output = str_replace('<div id="content">',$notification, $output);
         }
-        else {
-            return $output;
+
+        // Page in the lock-list and corner alert is enabled ("showlocked").
+        if ( $showLocked && $disabledPage) {
+            $corner = "<div id=\"content\">\n<div id=\"showLocked\" class=\"adminlock\"></div>\n";
+            $output = str_replace('<div id="content">', $corner, $output);
         }
+
+        return $output;
     }
 }
 ?>

@@ -1,4 +1,16 @@
 /**
+ *
+ */
+#showLocked {
+  background-image: url("img/adminLocker.png");
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  height: 100px;
+  width: 100px;
+}
+
+/**
  * Center info message
  */
 div.adminlock.message.fixed {
