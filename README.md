@@ -67,8 +67,3 @@ Improvements/ideas/todos
 - Use an HTML parser as DOMDocument or simpleXML?
 - Redesign it all? Use FBV framework instead of filtering generated code?
 - Instead of "pageTitle" improve the locking identification based on... what? urls?
-
-ToDo
-====
-
-- ...
